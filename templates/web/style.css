@@ -4,6 +4,12 @@ body {
     font-family: Arial;
 }
 
+input {
+    border-radius: 0.3em;
+    font-size: 2em;
+    text-align: center;
+}
+
 .page_contents {
     display: flex;
     margin: auto;
@@ -21,4 +27,39 @@ p {
     font-family: consolas;
     color: green;
     font-weight: bold;
+    max-width: 15em;
+    max-height: 15em;
+    display: inline-block;
+    word-break: break-all;
+    text-align: center;
+}
+
+.generator_button {
+    width: 6em;
+    height: 6em;
+    cursor: pointer;
+    background-color: green;
+}
+
+.wand {
+    cursor: pointer;
+    transition: scale 0.3s;
+    margin-top: 5em;
+    margin-bottom: 2em;
+    fill: white;
+}
+
+.animated_wand {
+    animation: wand_animation 1s linear infinite;
+}
+
+.wand:hover {
+    scale: 1.1;
+}
+
+@keyframes wand_animation {
+    0% { fill: red; }
+    33% { fill: blue; }
+    67% { fill: green; }
+    100% { fill: red; }
 }
