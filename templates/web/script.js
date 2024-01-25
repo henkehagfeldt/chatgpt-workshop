@@ -7,7 +7,9 @@ function uuidv4() {
 async function queryOpenAI(prompt) {
 
     // Insert your API key here
-    const apiKey = '<api-key>'; 
+    const apiKey = ''; 
+
+    prompt += " be ridiculous, and don't include anything conversational context.";
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -21,7 +23,7 @@ async function queryOpenAI(prompt) {
                 top_p: 1,
                 model: "gpt-3.5-turbo",
                 messages: [
-                    {"role": "system", "content": "You are a good randomization tool."},
+                    {"role": "system", "content": "You are a randomization tool."},
                     {"role": "user", "content": prompt}
                 ] 
             })
@@ -45,7 +47,7 @@ function readButton() {
     let user_input = document.querySelector("#user_input").value;
     console.log(user_input);
 
-    queryOpenAI(`Give me a random ${user_input} and nothing else, be ridiculous.`)
+    queryOpenAI(`Give me a random ${user_input}`)
     .then(answer => {
         if (answer != undefined) {
             document.querySelector("#chatgpt_output").innerHTML = answer;
