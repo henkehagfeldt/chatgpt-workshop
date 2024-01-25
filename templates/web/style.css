@@ -25,12 +25,12 @@ p {
 
 #chatgpt_output {
     font-family: consolas;
-    color: green;
+    color: rgb(52, 146, 254);
     font-weight: bold;
-    max-width: 15em;
+    max-width: 30em;
     max-height: 15em;
     display: inline-block;
-    word-break: break-all;
+    word-break: break;
     text-align: center;
 }
 

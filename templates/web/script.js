@@ -4,12 +4,20 @@ function uuidv4() {
     );
 }
 
+var input = document.getElementById('user_input');
+input.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter' || event.keyCode === 13) {
+        event.preventDefault();
+        readButton();
+    }
+});
+
 async function queryOpenAI(prompt) {
 
     // Insert your API key here
-    const apiKey = ''; 
+    const apiKey = '<key>'; 
 
-    prompt += " be ridiculous, and don't include anything conversational context.";
+    prompt += " be ridiculous, and don't include anything conversational context. Maximum two sentences.";
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
