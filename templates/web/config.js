@@ -1,3 +1,5 @@
+
+// const apiKey = "<your-api-key-here>";
 const imageGenerationUrl = "https://api.openai.com/v1/images/generations";
 const chatCompletionUrl = "https://api.openai.com/v1/chat/completions";
 const header = {
