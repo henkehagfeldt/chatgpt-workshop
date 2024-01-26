@@ -9,7 +9,7 @@ input.addEventListener('keydown', function(event) {
 
 async function queryOpenAI(prompt) {
 
-    prompt += postFix;
+    prompt += ` be ${setting}, and don't include anything conversational context. Maximum two sentences.`;
 
     try {
         const response = await fetch(chatCompletionUrl, {

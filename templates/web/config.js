@@ -12,9 +12,7 @@ const top_p = 1;
 const model = "gpt-3.5-turbo";
 
 const systemSetting = "You are a good randomization tool.";
-const setting = "funny";
-const postFix = ` be ${setting}, and don't include anything conversational context. Maximum two sentences.`;
-
-const imageStyle = "realistic";
+const setting = "wacko";
+const imageStyle = "photo-realistic";
 const imageSize = "512x512";
-const showImageDelay = 2000;
+const showImageDelay = 1000;
