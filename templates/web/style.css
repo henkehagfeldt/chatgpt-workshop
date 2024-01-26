@@ -4,10 +4,39 @@ body {
     font-family: Arial;
 }
 
+#image-container {
+    width: 512px;
+    height: 512px;
+    margin-top: 2em;
+}
+
+#generated-image {
+    border-radius: 0.4em;
+    box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.50);
+}
+
+#loading_spinner {
+    display: block;
+}
+
 input {
     border-radius: 0.3em;
     font-size: 2em;
     text-align: center;
+    height: 2em;
+}
+
+.wand {
+    cursor: pointer;
+    transition: scale 0.3s;
+    fill: white;
+    margin-left: 1em;
+}
+
+
+.input_container {
+    display: flex;
+    margin: auto;
 }
 
 .page_contents {
@@ -41,13 +70,6 @@ p {
     background-color: green;
 }
 
-.wand {
-    cursor: pointer;
-    transition: scale 0.3s;
-    margin-top: 5em;
-    margin-bottom: 2em;
-    fill: white;
-}
 
 .animated_wand {
     animation: wand_animation 1s linear infinite;
@@ -62,4 +84,23 @@ p {
     33% { fill: blue; }
     67% { fill: green; }
     100% { fill: red; }
+}
+
+#loading-spinner {
+    display: none;
+    position: relative;
+    margin-top:128px;
+    margin-left:128px;
+    width: 256px;
+    height: 256px;
+    border-radius: 50%;
+    border: 5px solid #f3f3f300; /* Light grey */
+    border-top: 5px solid #3498db; /* Blue */
+    border-right: 5px solid #3498db; /* Blue */
+    animation: spin 0.4s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

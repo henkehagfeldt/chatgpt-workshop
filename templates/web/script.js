@@ -1,10 +1,5 @@
-function uuidv4() {
-    return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
-      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-    );
-}
-
 var input = document.getElementById('user_input');
+
 input.addEventListener('keydown', function(event) {
     if (event.key === 'Enter' || event.keyCode === 13) {
         event.preventDefault();
@@ -14,24 +9,18 @@ input.addEventListener('keydown', function(event) {
 
 async function queryOpenAI(prompt) {
 
-    // Insert your API key here
-    const apiKey = '<key>'; 
-
-    prompt += " be ridiculous, and don't include anything conversational context. Maximum two sentences.";
+    prompt += postFix;
 
     try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        const response = await fetch(chatCompletionUrl, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
-            },
+            headers: header,
             body: JSON.stringify({
-                temperature: 1,
-                top_p: 1,
-                model: "gpt-3.5-turbo",
+                temperature: temperature,
+                top_p: top_p,
+                model: model,
                 messages: [
-                    {"role": "system", "content": "You are a randomization tool."},
+                    {"role": "system", "content": systemSetting},
                     {"role": "user", "content": prompt}
                 ] 
             })
@@ -48,22 +37,80 @@ async function queryOpenAI(prompt) {
     }
 }
 
-function readButton() {
+function animateWand(shouldAnimate) {
     let wand = document.querySelector(".wand");
-    wand.classList.add("animated_wand");
+
+    if (shouldAnimate) {
+        wand.classList.add("animated_wand");
+    } else {
+        wand.setAttribute('class', 'wand');
+    }
+    
+}
+
+function readButton() {
+    
+    animateWand(true);
 
     let user_input = document.querySelector("#user_input").value;
     console.log(user_input);
 
+    showSpinner();
+
     queryOpenAI(`Give me a random ${user_input}`)
     .then(answer => {
         if (answer != undefined) {
-            document.querySelector("#chatgpt_output").innerHTML = answer;
+            generateImage(user_input, answer);
         } else {
-            
             document.querySelector("#chatgpt_output").innerHTML = "Something went wrong";
         }
-        
-        wand.setAttribute('class', 'wand');
     });
+}
+
+function showResponse(response) {
+    setTimeout(() => {
+        document.querySelector("#chatgpt_output").innerHTML = response;
+        showImage();
+        animateWand(false);
+    }, showImageDelay);
+}
+
+async function generateImage(prompt, answer) {
+    
+    let imagePrompt = `Make a ${imageStyle} image of a ${prompt} that is ${answer}.`;
+    const response = await fetch(imageGenerationUrl, {
+        method: 'POST',
+        headers: header,
+        body: JSON.stringify({
+            prompt: imagePrompt,
+            n: 1,
+            size: imageSize
+        })
+    });
+
+    const responseData = await response.json();
+    displayImage(responseData.data[0].url);
+    showResponse(answer);
+}
+
+function displayImage(imageUrl) {
+    let imgElement =  document.querySelector('#generated-image');
+    imgElement.src = imageUrl;
+    console.log("Image has been set");
+}
+
+function showSpinner() {
+    let spinner = document.querySelector("#loading-spinner");
+    spinner.style.display = "block";
+
+    let image = document.querySelector("#generated-image");
+    image.style.display = "none";
+}
+
+function showImage() {
+    let spinner = document.querySelector("#loading-spinner");
+    spinner.style.display = "none";
+
+    let image = document.querySelector("#generated-image");
+    image.style.display = "block";
 }
